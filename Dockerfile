@@ -2,17 +2,15 @@ FROM postgres:latest
 
 RUN apt-get update && \
         apt-get -y upgrade && \
-        apt-get -y install gnupg apt-transport-https lsb-release wget nano
+        apt-get -y install gnupg apt-transport-https lsb-release curl
 
 ## Timescaledb
 # https://packagecloud.io/timescale/timescaledb
-RUN wget --quiet -O - https://packagecloud.io/timescale/timescaledb/gpgkey | apt-key add -
-
-RUN echo "deb https://packagecloud.io/timescale/timescaledb/debian/ $(lsb_release -cs) main" > /etc/apt/sources.list.d/timescaledb.list
+RUN curl -s https://packagecloud.io/install/repositories/timescale/timescaledb/script.deb.sh | bash
 
 RUN apt-get -q update && \
         apt-get -y install timescaledb-2-postgresql-14
-        # timescaledb-toolkit-postgresql-14
+#        timescaledb-toolkit-postgresql-14
 #RUN sed -r -i "s/[#]*\s*(shared_preload_libraries)\s*=\s*'(.*)'/\1 = 'timescaledb,\2'/;s/,'/'/" /usr/share/postgresql/postgresql.conf.sample
 # extension "timescaledb" must be preloaded
 RUN echo "shared_preload_libraries = 'timescaledb'" >> /usr/share/postgresql/postgresql.conf.sample

@@ -35,4 +35,4 @@ jobs:
           context: .
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: xbgmsharp/docker-trakt-tools:latest
+          tags: xbgmsharp/timescaledb-postgis:latest
