@@ -4,6 +4,11 @@ on:
   push:
     branches:
       - 'main'
+  schedule:
+    # we build monthly at 00:00 on day-of-month 1
+    - cron:  '0 0 1 * *'
+    # we build weekly at 00:00 on Sunday.
+    #- cron:  '0 0 * * 0'
 
 jobs:
   docker:
