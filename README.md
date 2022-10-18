@@ -1,6 +1,6 @@
 # timescaledb-postgis
 
-PostgreSQL with TimescaleDB extension along with the PostGIS extension.
+PostgreSQL with TimescaleDB extension along with the PostGIS and pg_cron extension.
 
 This Docker image is derived from the official PostgreSQL image and includes Debian Linux as its operating system.
 
@@ -10,9 +10,11 @@ Packages are install using deb files provided by the repespective compoments mai
 
 Multi arch (linux/amd64,linux/arm64) postgres-timescaledb-postgis. There are no deb files available for timescaledb-toolkit on other architectures.
 
-The latest release based on the latest PostgreSQL, tag: `postgres:latest`
+The latest release based on the latest PostgreSQL, tag: `postgres:14`.
 
-The image is updated every month to keep up to date the system and the compoments.
+***Stick postgres-14 as TimescaleDB is not yet compatible with postgres-15.***
+
+The image is updated weekly to keep up to date the system and the compoments.
 
 From postgres:latest (Debian) with
 + timescaledb
