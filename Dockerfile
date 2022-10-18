@@ -1,4 +1,4 @@
-FROM postgres:latest
+FROM postgres:14
 
 RUN apt-get update && \
         DEBIAN_FRONTEND=noninteractive apt-get -y upgrade && \
