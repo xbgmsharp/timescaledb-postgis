@@ -10,9 +10,7 @@ Packages are install using deb files provided by the repespective compoments mai
 
 Multi arch (linux/amd64,linux/arm64) postgres-timescaledb-postgis. There are no deb files available for timescaledb-toolkit on other architectures.
 
-The latest release based on the latest PostgreSQL, tag: `postgres:14`.
-
-***Stick postgres-14 as TimescaleDB is not yet compatible with postgres-15.***
+The latest release based on the latest PostgreSQL, tag: `postgres:latest`.
 
 The image is updated weekly to keep up to date the system and the compoments.
 
