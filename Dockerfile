@@ -39,6 +39,8 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -y install python3 postgresql-plpytho
 RUN echo "shared_preload_libraries = 'timescaledb,pg_stat_statements,pg_cron'" >> /usr/share/postgresql/postgresql.conf.sample
 # timescaledb telemetry off
 RUN echo "timescaledb.telemetry_level=off" >> /usr/share/postgresql/postgresql.conf.sample
+# Fix: initdb: error: invalid locale settings; check LANG and LC_* environment variables
+RUN echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen && locale-gen en_US.UTF-8
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get -y autoremove --purge && apt-get -y clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /var/cache/apt
