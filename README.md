@@ -1,6 +1,6 @@
 # timescaledb-postgis
 
-PostgreSQL with TimescaleDB extension along with the PostGIS and pg_cron extension.
+PostgreSQL with TimescaleDB extension along with the PostGIS and pg_cron extension. https://hub.docker.com/r/xbgmsharp/timescaledb-postgis
 
 This Docker image is derived from the official PostgreSQL image and includes Debian Linux as its operating system.
 
