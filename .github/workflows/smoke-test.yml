@@ -11,14 +11,14 @@ on:
 
 jobs:
   smoketest:
-    name: timescaledb-postgis-smoketest
+    name: smoketest
     runs-on: ubuntu-latest
     steps:
       - name: Check out the source
         uses: actions/checkout@v3
 
       - name: Pull Docker image
-        run: docker xbgmsharp/timescaledb-postgis
+        run: docker pull xbgmsharp/timescaledb-postgis
 
       - name: Install psql
         run: sudo apt install postgresql-client
@@ -65,13 +65,13 @@ jobs:
               echo "Test TimescaleDB Extension"
               psql -c "CREATE EXTENSION IF NOT EXISTS timescaledb;"
               psql -c "SELECT extversion FROM pg_extension where extname = 'timescaledb';"
-              psql -c "CREATE TABLE conditions_1 (
+              psql -c "CREATE TABLE conditions (
                 time        TIMESTAMPTZ       NOT NULL,
                 device_id   TEXT              NOT NULL,
                 temperature DOUBLE PRECISION  NULL,
                 humidity    DOUBLE PRECISION  NULL
               );"
-              psql -c "SELECT create_hypertable('conditions', 'time', 'device_id');"
+              psql -c "SELECT create_hypertable('conditions', 'time', 'device_id', 2);"
               psql -c "CREATE INDEX ON conditions (device_id, time DESC);"
               psql -c "INSERT INTO conditions
                 VALUES
