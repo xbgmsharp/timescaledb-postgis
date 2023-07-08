@@ -1,0 +1,95 @@
+name: Smoke Test Docker Image
+
+on:
+  workflow_run:
+    types:
+      - completed
+    workflows:
+      - 'Workflow Docker'
+    # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  smoketest:
+    name: timescaledb-postgis-smoketest
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the source
+        uses: actions/checkout@v3
+
+      - name: Pull Docker image
+        run: docker xbgmaharp/timescaledb-postgis
+
+      - name: Install psql
+        run: sudo apt install postgresql-client
+
+      - name: Run the smoke test
+        run: |
+          set -eu
+          export PGHOST=localhost
+          export PGUSER=postgres
+          export PGPASSWORD=test1234
+          docker container stop smoketest-image || true
+          docker container rm smoketest-image || true
+          docker run -d -p 5432:5432 -e POSTGRES_PASSWORD=${PGPASSWORD} --name xbgmaharp/timescaledb-postgis smoketest-image
+          for _ in {1..120}
+          do
+            if [ -z "$(docker container ls -q --filter name=smoketest-image)" ]
+            then
+              echo "Smoketest container is not running"
+              exit 1
+            fi
+            if psql -c "select 1"
+            then
+              echo "Test PostgreSQL"
+              psql -c "SELECT version();"
+
+              echo "Test pgcrypto"
+              psql -c "CREATE EXTENSION IF NOT EXISTS pgcrypto;"
+              psql -c "CREATE TABLE user_passwords (username varchar(100) PRIMARY KEY, crypttext text);"
+              psql -c "INSERT INTO user_passwords (username, crypttext)
+                VALUES ('user1', pgp_sym_encrypt('user1_password','<Password_Key>')),
+                  ('user2', pgp_sym_encrypt('user2_password','<Password_Key>'));"
+              psql -c "SELECT * FROM user_passwords;"
+
+              echo "Test PostGIS Extension"
+              psql -c "CREATE EXTENSION IF NOT EXISTS postgis;" || true
+              psql -c "SELECT extversion FROM pg_extension where extname = 'postgis';"
+              psql -c "SELECT PostGIS_Version();"
+
+              echo "Test PostGIS Geometry Function"
+              psql -c "CREATE TABLE test_geometry_table (id serial primary key, geom geometry(Point, 4326));"
+              psql -c "INSERT INTO test_geometry_table (geom) VALUES (ST_GeomFromText('POINT(0 0)', 4326));"
+              psql -c "SELECT * FROM test_geometry_table;"
+
+              echo "Test TimescaleDB Extension"
+              psql -c "CREATE EXTENSION IF NOT EXISTS timescaledb;"
+              psql -c "SELECT extversion FROM pg_extension where extname = 'timescaledb';"
+              psql -c "CREATE TABLE conditions_1 (
+                time        TIMESTAMPTZ       NOT NULL,
+                device_id   TEXT              NOT NULL,
+                temperature DOUBLE PRECISION  NULL,
+                humidity    DOUBLE PRECISION  NULL
+              );"
+              psql -c "SELECT create_hypertable('conditions', 'time', 'device_id');"
+              psql -c "CREATE INDEX ON conditions (device_id, time DESC);"
+              psql -c "INSERT INTO conditions
+                VALUES
+                  (NOW(), '123456789', 70.0, 50.0),
+                  (NOW(), '987654321', 66.5, 60.0),
+                  (NOW(), '123654789', 77.0, 65.2);"
+              psql -c "SELECT * FROM conditions;"
+              break
+            fi
+            sleep 1
+          done
+          if ! psql -c "select 1"
+          then
+            echo "Cannot connect to PostgreSQL"
+            exit 1
+          fi
+
+      - name: Show the logs
+        if: always()
+        run: |
+          docker logs smoketest-container
