@@ -92,4 +92,4 @@ jobs:
       - name: Show the logs
         if: always()
         run: |
-          docker logs smoketest-container
+          docker logs smoketest-image
