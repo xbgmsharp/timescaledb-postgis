@@ -31,7 +31,7 @@ jobs:
           export PGPASSWORD=test1234
           docker container stop smoketest-image || true
           docker container rm smoketest-image || true
-          docker run -d -p 5432:5432 -e POSTGRES_PASSWORD=${PGPASSWORD} --name xbgmsharp/timescaledb-postgis smoketest-image
+          docker run -d -p 5432:5432 -e POSTGRES_PASSWORD=${PGPASSWORD} --name smoketest-image xbgmsharp/timescaledb-postgis
           for _ in {1..120}
           do
             if [ -z "$(docker container ls -q --filter name=smoketest-image)" ]
