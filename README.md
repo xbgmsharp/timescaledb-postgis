@@ -1,3 +1,7 @@
+
+[![Build Docker Image](https://github.com/xbgmsharp/timescaledb-postgis/actions/workflows/docker-image.yml/badge.svg)](https://github.com/xbgmsharp/timescaledb-postgis/actions/workflows/docker-image.yml)
+[![Test Docker Image](https://github.com/xbgmsharp/timescaledb-postgis/actions/workflows/docker-test.yml/badge.svg)](https://github.com/xbgmsharp/timescaledb-postgis/actions/workflows/docker-test.yml)
+
 # timescaledb-postgis
 
 PostgreSQL with TimescaleDB extension along with the PostGIS and pg_cron extension. https://hub.docker.com/r/xbgmsharp/timescaledb-postgis
@@ -6,13 +10,13 @@ This Docker image is derived from the official PostgreSQL image and includes Deb
 
 Provide an alternative to the deprecated image, https://hub.docker.com/r/timescale/timescaledb-postgis and add multi architecture support.
 
-Packages are install using deb files provided by the repespective compoments maintainers.
+Packages are install using deb files provided by the respective components maintainers.
 
 Multi arch (linux/amd64,linux/arm64) postgres-timescaledb-postgis. There are no deb files available for timescaledb-toolkit on other architectures.
 
 The latest release based on the latest PostgreSQL, tag: `postgres:latest`.
 
-The image is updated weekly to keep up to date the system and the compoments.
+The image is updated weekly to keep up to date the system and the components.
 
 From postgres:latest (Debian) with
 + timescaledb
