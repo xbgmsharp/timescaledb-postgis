@@ -2,6 +2,7 @@
 set -ex 
 
 psql <<EOF
+\set ON_ERROR_STOP on
 CREATE EXTENSION "uuid-ossp";
 CREATE EXTENSION "citext";
 

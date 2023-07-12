@@ -13,7 +13,7 @@ CREATE TABLE conditions (
 SELECT create_hypertable('conditions', 'time');
 INSERT INTO
     conditions (time, location, temperature, humidity)
-#  VALUES
+  VALUES
     (NOW(), 'loc_1', 70.0, 50.0),
     (NOW(), 'loc_2', 66.5, 60.0),
     (NOW(), 'loc_3', 77.0, 65.2);
@@ -30,4 +30,4 @@ SELECT time_bucket('15 minutes', time) AS fifteen_min,
   ORDER BY fifteen_min DESC, max_temp DESC;
 EOF
 
-echo $?
+#echo $?
