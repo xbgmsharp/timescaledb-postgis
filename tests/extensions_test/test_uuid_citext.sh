@@ -11,7 +11,7 @@ CREATE TABLE users (
     pref    JSONB);
 
 INSERT INTO users (nick, pref) VALUES ( 'larry',  '{"a": {"b":"foo"}}' );
-INSERT INTO users (nick, pref) VALUES ( 'TOM',  '{"a": {"b":"foo"}}' );
+INSERT INTO users (nick, pref) VALUES ( 'TOM',  '{"x": {"y":"foo"}}' );
 
 SELECT * FROM users WHERE nick = 'Larry';
 SELECT * FROM users WHERE nick = 'tom';
