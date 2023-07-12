@@ -44,7 +44,10 @@ jobs:
             then
               echo "Test PostgreSQL"
               psql -c "SELECT version();"
-              bash tests/extensions_test/test*.sh
+              ls -lh tests/extensions_test/test*.sh
+              for f in tests/extensions_test/test*.sh; do
+                if ! bash "$f"; then exit 1; fi
+              done
               break
             fi
             sleep 1

@@ -2,7 +2,7 @@
 set -ex
 
 echo "Test PostGIS Extension"
-psql -c "CREATE EXTENSION postgis;" || true
+psql -c "CREATE EXTENSION postgis;"
 psql -c "SELECT extversion FROM pg_extension where extname = 'postgis';"
 psql -c "SELECT PostGIS_Version();"
 
