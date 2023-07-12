@@ -2,6 +2,7 @@
 set -ex 
 
 psql <<EOF
+\set ON_ERROR_STOP on
 CREATE EXTENSION timescaledb;
 CREATE TABLE conditions (
   time        TIMESTAMPTZ       NOT NULL,
