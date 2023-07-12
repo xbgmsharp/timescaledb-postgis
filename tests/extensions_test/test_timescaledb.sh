@@ -11,9 +11,9 @@ CREATE TABLE conditions (
 );
 SELECT create_hypertable('conditions', 'time');
 INSERT INTO conditions(time, location, temperature, humidity)
-    (NOW(), 'loc_1', 70.0, 50.0),
-    (NOW(), 'loc_2', 66.5, 60.0),
-    (NOW(), 'loc_3', 77.0, 65.2);"
+  (NOW(), 'loc_1', 70.0, 50.0),
+  (NOW(), 'loc_2', 66.5, 60.0),
+  (NOW(), 'loc_3', 77.0, 65.2);
 
 SELECT * FROM conditions ORDER BY time DESC LIMIT 100;
 
