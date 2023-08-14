@@ -1,4 +1,4 @@
-FROM postgres:bullseye
+FROM postgres:latest
 
 ENV DEBIAN_FRONTEND=noninteractive
 
