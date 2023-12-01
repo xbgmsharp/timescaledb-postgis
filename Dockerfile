@@ -1,4 +1,4 @@
-FROM postgres:15-bullseye
+FROM postgres:16-bullseye
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -12,27 +12,27 @@ RUN apt-get update && \
 RUN curl -s https://packagecloud.io/install/repositories/timescale/timescaledb/script.deb.sh | bash
 
 RUN apt-get -q update && \
-        DEBIAN_FRONTEND=noninteractive apt-get -y install timescaledb-2-postgresql-15
-#        timescaledb-toolkit-postgresql-15
+        DEBIAN_FRONTEND=noninteractive apt-get -y install timescaledb-2-postgresql-16
+#        timescaledb-toolkit-postgresql-16
 #RUN sed -r -i "s/[#]*\s*(shared_preload_libraries)\s*=\s*'(.*)'/\1 = 'timescaledb,\2'/;s/,'/'/" /usr/share/postgresql/postgresql.conf.sample
 
 ## Postgis
 # https://trac.osgeo.org/postgis/wiki/UsersWikiPostGIS24UbuntuPGSQL10Apt
 #
 RUN apt-get -q update && \
-        DEBIAN_FRONTEND=noninteractive apt-get -y install postgresql-15-postgis-3 \
-        postgresql-15-postgis-3-scripts \
-        postgresql-15-pgrouting \
-        postgresql-15-pgrouting-scripts
+        DEBIAN_FRONTEND=noninteractive apt-get -y install postgresql-16-postgis-3 \
+        postgresql-16-postgis-3-scripts \
+        postgresql-16-pgrouting \
+        postgresql-16-pgrouting-scripts
 
 ## pg_cron
 # https://github.com/citusdata/pg_cron
 #
 RUN apt-get -q update && \
-        DEBIAN_FRONTEND=noninteractive apt-get -y install postgresql-15-cron
+        DEBIAN_FRONTEND=noninteractive apt-get -y install postgresql-16-cron
 
 ## Extension plpython3
-RUN DEBIAN_FRONTEND=noninteractive apt-get -y install python3 postgresql-plpython3-15 python3-requests
+RUN DEBIAN_FRONTEND=noninteractive apt-get -y install python3 postgresql-plpython3-16 python3-requests
 
 ## Config
 # extension timescaledb and others must be preloaded
