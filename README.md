@@ -24,6 +24,8 @@ From postgres:latest (Debian) with
 + postgis
 + plpython3
 + pg_cron
++ pg_cron
++ pgvector
 
 PostgreSQL: https://hub.docker.com/_/postgres
 
@@ -32,3 +34,5 @@ Timescaledb: https://packagecloud.io/timescale/timescaledb
 Postgis: https://trac.osgeo.org/postgis/wiki/UsersWikiPostGIS24UbuntuPGSQL10Apt
 
 pg_cron: https://github.com/citusdata/pg_cron
+
+pgvector: https://github.com/pgvector/pgvector
