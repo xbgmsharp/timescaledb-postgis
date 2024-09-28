@@ -24,8 +24,8 @@ From postgres:latest (Debian) with
 + postgis
 + plpython3
 + pg_cron
-+ pg_cron
 + pgvector
++ MobilityDB
 
 PostgreSQL: https://hub.docker.com/_/postgres
 
@@ -36,3 +36,5 @@ Postgis: https://trac.osgeo.org/postgis/wiki/UsersWikiPostGIS24UbuntuPGSQL10Apt
 pg_cron: https://github.com/citusdata/pg_cron
 
 pgvector: https://github.com/pgvector/pgvector
+
+MobilityDB: https://github.com/MobilityDB/MobilityDB
