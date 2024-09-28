@@ -40,6 +40,12 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -y install python3 postgresql-plpytho
 RUN apt-get -q update && \
         DEBIAN_FRONTEND=noninteractive apt-get -y install postgresql-16-pgvector
 
+## MobilityDB
+# https://github.com/MobilityDB/MobilityDB
+#
+RUN apt-get -q update && \
+        DEBIAN_FRONTEND=noninteractive apt-get -y install postgresql-16-mobilitydb
+
 ## pgbackrest
 # https://pgbackrest.org/
 #
