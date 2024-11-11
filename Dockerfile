@@ -1,4 +1,4 @@
-FROM postgres:16-bookworm
+FROM postgres:17-bookworm
 
 ENV DEBIAN_FRONTEND=noninteractive
 
