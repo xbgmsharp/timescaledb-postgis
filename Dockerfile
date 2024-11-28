@@ -1,4 +1,4 @@
-FROM postgres:16-bookworm
+FROM postgres:17-bookworm
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -12,51 +12,49 @@ RUN apt-get update && \
 RUN curl -s https://packagecloud.io/install/repositories/timescale/timescaledb/script.deb.sh | bash
 
 RUN apt-get -q update && \
-        DEBIAN_FRONTEND=noninteractive apt-get -y install timescaledb-2-postgresql-16 timescaledb-tools
-#        timescaledb-toolkit-postgresql-16
+        DEBIAN_FRONTEND=noninteractive apt-get -y install timescaledb-2-postgresql-17 timescaledb-tools
+#        timescaledb-toolkit-postgresql-17
 #RUN sed -r -i "s/[#]*\s*(shared_preload_libraries)\s*=\s*'(.*)'/\1 = 'timescaledb,\2'/;s/,'/'/" /usr/share/postgresql/postgresql.conf.sample
 
 ## Postgis
 # https://trac.osgeo.org/postgis/wiki/UsersWikiPostGIS24UbuntuPGSQL10Apt
 #
 RUN apt-get -q update && \
-        DEBIAN_FRONTEND=noninteractive apt-get -y install postgresql-16-postgis-3 \
-        postgresql-16-postgis-3-scripts \
-        postgresql-16-pgrouting \
-        postgresql-16-pgrouting-scripts
+        DEBIAN_FRONTEND=noninteractive apt-get -y install postgresql-17-postgis-3 \
+        postgresql-17-postgis-3-scripts \
+        postgresql-17-pgrouting \
+        postgresql-17-pgrouting-scripts
 
 ## pg_cron
 # https://github.com/citusdata/pg_cron
 #
 RUN apt-get -q update && \
-        DEBIAN_FRONTEND=noninteractive apt-get -y install postgresql-16-cron
+        DEBIAN_FRONTEND=noninteractive apt-get -y install postgresql-17-cron
 
 ## Extension plpython3
-RUN DEBIAN_FRONTEND=noninteractive apt-get -y install python3 postgresql-plpython3-16 python3-requests
+RUN DEBIAN_FRONTEND=noninteractive apt-get -y install python3 postgresql-plpython3-17 python3-requests
 
 ## Pgvector
 # https://github.com/pgvector/pgvector
 #
 RUN apt-get -q update && \
-        DEBIAN_FRONTEND=noninteractive apt-get -y install postgresql-16-pgvector
+        DEBIAN_FRONTEND=noninteractive apt-get -y install postgresql-17-pgvector
 
 ## MobilityDB
 # https://github.com/MobilityDB/MobilityDB
 #
 RUN apt-get -q update && \
-        DEBIAN_FRONTEND=noninteractive apt-get -y install postgresql-16-mobilitydb
-
-## pgbackrest
-# https://pgbackrest.org/
-#
-#RUN apt-get -q update && \
-#        DEBIAN_FRONTEND=noninteractive apt-get -y install pgbackrest
+        DEBIAN_FRONTEND=noninteractive apt-get -y install postgresql-17-mobilitydb
 
 ## Config
 # extension timescaledb and others must be preloaded
-RUN echo "shared_preload_libraries = 'timescaledb,pg_stat_statements,pg_cron'" >> /usr/share/postgresql/postgresql.conf.sample
+RUN echo "shared_preload_libraries = 'timescaledb,pg_stat_statements,pg_cron,postgis-3'" >> /usr/share/postgresql/postgresql.conf.sample
 # timescaledb telemetry off
 RUN echo "timescaledb.telemetry_level=off" >> /usr/share/postgresql/postgresql.conf.sample
+# pg_stat_statements
+RUN echo "pg_stat_statements.max = 10000" >> /usr/share/postgresql/postgresql.conf.sample
+RUN echo "pg_stat_statements.track = all" >> /usr/share/postgresql/postgresql.conf.sample
+
 # Fix: initdb: error: invalid locale settings; check LANG and LC_* environment variables
 RUN echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen && locale-gen en_US.UTF-8
 
