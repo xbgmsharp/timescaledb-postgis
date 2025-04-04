@@ -12,8 +12,8 @@ RUN apt-get update && \
 RUN curl -s https://packagecloud.io/install/repositories/timescale/timescaledb/script.deb.sh | bash
 
 RUN apt-get -q update && \
-        DEBIAN_FRONTEND=noninteractive apt-get -y install timescaledb-2-postgresql-16 timescaledb-tools
-#        timescaledb-toolkit-postgresql-16
+        DEBIAN_FRONTEND=noninteractive apt-get -y install timescaledb-2-postgresql-16 timescaledb-tools \
+        timescaledb-toolkit-postgresql-16
 #RUN sed -r -i "s/[#]*\s*(shared_preload_libraries)\s*=\s*'(.*)'/\1 = 'timescaledb,\2'/;s/,'/'/" /usr/share/postgresql/postgresql.conf.sample
 
 ## Postgis
