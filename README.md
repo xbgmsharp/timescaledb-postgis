@@ -20,7 +20,7 @@ The image is updated weekly to keep up to date the system and the components.
 
 From postgres:latest (Debian) with
 + timescaledb
-+ timescaledb-toolkit (not multi-arch)
++ timescaledb-toolkit
 + postgis
 + plpython3
 + pg_cron
