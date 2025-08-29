@@ -7,6 +7,10 @@ psql -c "SELECT extversion FROM pg_extension where extname = 'postgis';"
 psql -c "SELECT PostGIS_Version();"
 
 echo "Test PostGIS Geometry Function"
-psql -c "CREATE TABLE test_geometry_table (id serial primary key, geom geometry(Point, 4326));"
-psql -c "INSERT INTO test_geometry_table (geom) VALUES (ST_GeomFromText('POINT(0 0)', 4326));"
-psql -c "SELECT * FROM test_geometry_table;"
+psql <<EOF
+\set ON_ERROR_STOP on
+
+CREATE TABLE test_geometry_table (id serial primary key, geom geometry(Point, 4326));
+INSERT INTO test_geometry_table (geom) VALUES (ST_GeomFromText('POINT(0 0)', 4326));
+SELECT * FROM test_geometry_table;
+EOF
