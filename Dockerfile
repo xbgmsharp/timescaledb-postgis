@@ -1,4 +1,9 @@
-FROM postgres:16-bookworm
+FROM postgres:18-trixie
+
+# Configuration Parameters
+LABEL maintainer="PostgSail - https://github.com/xbgmsharp/PostgSail"
+LABEL org.opencontainers.image.description="PostgSail - An open source PostgreSQL-based marine vessel tracking and monitoring platform."
+LABEL org.opencontainers.image.source="https://github.com/xbgmsharp/PostgSail"
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -12,39 +17,39 @@ RUN apt-get update && \
 RUN curl -s https://packagecloud.io/install/repositories/timescale/timescaledb/script.deb.sh | bash
 
 RUN apt-get -q update && \
-        DEBIAN_FRONTEND=noninteractive apt-get -y install timescaledb-2-postgresql-16 timescaledb-tools \
-        timescaledb-toolkit-postgresql-16
+        DEBIAN_FRONTEND=noninteractive apt-get -y install timescaledb-2-postgresql-18 timescaledb-tools \
+        timescaledb-toolkit-postgresql-18
 #RUN sed -r -i "s/[#]*\s*(shared_preload_libraries)\s*=\s*'(.*)'/\1 = 'timescaledb,\2'/;s/,'/'/" /usr/share/postgresql/postgresql.conf.sample
 
 ## Postgis
 # https://trac.osgeo.org/postgis/wiki/UsersWikiPostGIS24UbuntuPGSQL10Apt
 #
 RUN apt-get -q update && \
-        DEBIAN_FRONTEND=noninteractive apt-get -y install postgresql-16-postgis-3 \
-        postgresql-16-postgis-3-scripts \
-        postgresql-16-pgrouting \
-        postgresql-16-pgrouting-scripts
+        DEBIAN_FRONTEND=noninteractive apt-get -y install postgresql-18-postgis-3 \
+        postgresql-18-postgis-3-scripts \
+        postgresql-18-pgrouting \
+        postgresql-18-pgrouting-scripts
 
 ## pg_cron
 # https://github.com/citusdata/pg_cron
 #
 RUN apt-get -q update && \
-        DEBIAN_FRONTEND=noninteractive apt-get -y install postgresql-16-cron
+        DEBIAN_FRONTEND=noninteractive apt-get -y install postgresql-18-cron
 
 ## Extension plpython3
-RUN DEBIAN_FRONTEND=noninteractive apt-get -y install python3 postgresql-plpython3-16 python3-requests
+RUN DEBIAN_FRONTEND=noninteractive apt-get -y install python3 postgresql-plpython3-18 python3-requests
 
 ## Pgvector
 # https://github.com/pgvector/pgvector
 #
 RUN apt-get -q update && \
-        DEBIAN_FRONTEND=noninteractive apt-get -y install postgresql-16-pgvector
+        DEBIAN_FRONTEND=noninteractive apt-get -y install postgresql-18-pgvector
 
 ## MobilityDB
 # https://github.com/MobilityDB/MobilityDB
 #
 RUN apt-get -q update && \
-        DEBIAN_FRONTEND=noninteractive apt-get -y install postgresql-16-mobilitydb
+        DEBIAN_FRONTEND=noninteractive apt-get -y install postgresql-18-mobilitydb
 
 ## Config
 # extension timescaledb and others must be preloaded
