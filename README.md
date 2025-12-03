@@ -14,7 +14,7 @@ Packages are install using deb files provided by the respective components maint
 
 Multi arch (linux/amd64,linux/arm64) postgres-timescaledb-postgis.
 
-The latest release based on the latest PostgreSQL, tag: `postgres:latest`.
+The latest release based on the latest PostgreSQL, tag: `postgres:18-trixie`.
 
 The image is updated weekly to keep up to date the system and the components.
 
