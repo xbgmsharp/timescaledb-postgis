@@ -39,12 +39,6 @@ RUN apt-get -q update && \
 ## Extension plpython3
 RUN DEBIAN_FRONTEND=noninteractive apt-get -y install python3 postgresql-plpython3-18 python3-requests
 
-## Pgvector
-# https://github.com/pgvector/pgvector
-#
-RUN apt-get -q update && \
-        DEBIAN_FRONTEND=noninteractive apt-get -y install postgresql-18-pgvector
-
 ## MobilityDB
 # https://github.com/MobilityDB/MobilityDB
 #
