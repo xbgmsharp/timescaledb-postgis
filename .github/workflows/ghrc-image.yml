@@ -15,8 +15,11 @@ on:
     - cron:  '0 0 * * 0'
 
 jobs:
-  docker:
+  build-and-push-image:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
     steps:
       -
         name: Checkout
@@ -43,6 +46,6 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: .
-          platforms: linux/amd64,linux/arm64,linux/arm/v7
+          platforms: linux/amd64,linux/arm64
           push: true
           tags: ghcr.io/xbgmsharp/postgsail-db:latest
